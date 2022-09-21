@@ -90,7 +90,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 
-export default function Layout({children}) {
+export default function Layout({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -103,7 +103,7 @@ export default function Layout({children}) {
   };
 
   const ListItemMenu = [
-    { label: 'Medicine', to: '/medicine', icon: <MedicalServicesIcon /> },
+    { label: 'catagory', to: '/catagory', icon: <MedicalServicesIcon /> },
   ]
 
   return (
@@ -131,8 +131,8 @@ export default function Layout({children}) {
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-          <ChevronLeftIcon/>
-          {/* <VaccinesIcon/>
+            <ChevronLeftIcon />
+            {/* <VaccinesIcon/>
           <PersonIcon /> */}
           </IconButton>
         </DrawerHeader>
@@ -167,7 +167,7 @@ export default function Layout({children}) {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-       {children}
+        {children}
       </Box>
     </Box>
   );

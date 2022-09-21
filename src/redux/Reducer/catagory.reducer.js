@@ -1,39 +1,27 @@
 import * as Actiontype from '../actiontype'
 
-const inVal = {
+const iniVal = {
     isLoding: false,
-    patient: [],
+    catagory: [],
     error: ''
+
 }
 
-export const PatientReducer = (state = inVal, action) => {
+export const catagoryreducer = (state = iniVal, action) => {
     console.log(state, action.payload, action.type);
     switch (action.type) {
-        case Actiontype.GET_PATIENT:
+        case Actiontype.GET_CATAGORY:
             return {
                 ...state,
                 isLoding: false,
-                patient: action.payload,
+                catagory: action.payload,
                 error: ''
             }
-        case Actiontype.LODING_PATIENT:
-            return {
-                ...state,
-                isLoding: true,
-                error: ''
-            }
-        case Actiontype.ERROR_PATIENT:
+        case Actiontype.EDIT_CATAGORY:
             return {
                 ...state,
                 isLoding: false,
-                patient: [],
-                error: action.payload
-            }
-        case Actiontype.EDIT_PATIENT:
-            return {
-                ...state,
-                isLoding: false,
-                patient: state.patient.map((m) => {
+                catagory: state.catagory.map((m) => {
                     if (m.id === action.payload.id) {
                         return action.payload;
                     } else {
@@ -42,21 +30,35 @@ export const PatientReducer = (state = inVal, action) => {
                 }),
                 error: ''
             }
-        case Actiontype.DELETE_PATIENT:
+        case Actiontype.DELETE_CATAGORY:
             return {
                 ...state,
                 isLoding: false,
-                patient: state.patient.filter((l) => l.id !== action.payload),
+                catagory: state.catagory.filter((l) => l.id !== action.payload),
                 error: ''
             }
-        case Actiontype.ADD_PATIENT:
+        case Actiontype.ADD_CATAGORY:
             return {
                 ...state,
                 isLoding: false,
-                patient: (state.patient.concat(action.payload)),
+                catagory: (state.catagory.concat(action.payload)),
                 error: ''
+            }
+        case Actiontype.LODING_CATAGORY:
+            return {
+                ...state,
+                isLoding: true,
+                error: ''
+            }
+        case Actiontype.ERROR_CATAGORY:
+            return {
+                ...state,
+                isLoding: false,
+                catagory: [],
+                error: action.payload
             }
         default:
             return state
+
     }
 }

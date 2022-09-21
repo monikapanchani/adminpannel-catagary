@@ -13,14 +13,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addMedicine,
-  DeleteMedicine,
-  EditMedicine,
-  getMedicine,
-} from "../../redux/Action/medicine.action";
+  addCatagory,
+  DeleteCatagory,
+  EditCatagory,
+  getCatagory,
+} from "../../redux/Action/catagory.action";
 import { render } from "@testing-library/react";
 
-function Medicine(props) {
+function Catagory(props) {
   const [open, setOpen] = React.useState(false);
   const [dopen, setDOpen] = React.useState(false);
   const [data, setdata] = useState([]);
@@ -29,7 +29,7 @@ function Medicine(props) {
   const [FilterData, setFilterData] = useState([]);
 
   const dispatch = useDispatch();
-  const medicine = useSelector((state) => state.medicine);
+  const catagory = useSelector((state) => state.catagory);
 
   const handleDClickOpen = () => {
     setDOpen(true);
@@ -45,23 +45,7 @@ function Medicine(props) {
   };
 
   const handleInsert = (values) => {
-    // let id = Math.floor(Math.random() * 1000);
-
-    // let data = {
-    //     id: id,
-    //     ...values
-    // }
-
-    // let localData = JSON.parse(localStorage.getItem('Medicine'));
-    // if (localData === null) {
-    //     localStorage.setItem("Medicine", JSON.stringify([data]));
-    // } else {
-    //     localData.push(data);
-    //     localStorage.setItem("Medicine", JSON.stringify(localData));
-
-    // }
-
-    dispatch(addMedicine(values));
+    dispatch(addCatagory(values));
 
     loadData();
     handleClose();
@@ -69,26 +53,15 @@ function Medicine(props) {
   };
 
   let schema = yup.object().shape({
-    name: yup.string().required("Please enter name"),
-    price: yup.number().required("please enter price").positive().integer(),
-    quantity: yup.string().required("please enter quantity"),
-    expiry: yup.string().required("please enter expiry"),
+    name: yup.string().required("Please enter catagory name"),
+    price: yup.number().required("please enter catagory price").positive().integer(),
     FIleimage: yup.mixed().required("please enter image"),
   });
 
   let handleUpdateData = (values) => {
-    // let localData = JSON.parse(localStorage.getItem('Medicine'));
-    // let Udata = localData.map((l) => {
-    //     if (l.id === values.id) {
-    //         return values;
-    //     } else {
-    //         return l;
-    //     }
-    // })
-    // localStorage.setItem('Medicine', JSON.stringify(Udata));
-    // console.log(Udata);
 
-    dispatch(EditMedicine(values));
+
+    dispatch(EditCatagory(values));
 
     handleClose();
     setUpdate(false);
@@ -100,8 +73,6 @@ function Medicine(props) {
     initialValues: {
       name: "",
       price: "",
-      quantity: "",
-      expiry: "",
       FIleimage: "",
     },
     validationSchema: schema,
@@ -115,12 +86,8 @@ function Medicine(props) {
   });
 
   const handleDelete = (params) => {
-    // let localData = JSON.parse(localStorage.getItem('Medicine'));
-    // let fData = localData.filter((l) => l.id !== did)
-    // console.log(fData);
-    // localStorage.setItem("Medicine", JSON.stringify(fData));
 
-    dispatch(DeleteMedicine(did));
+    dispatch(DeleteCatagory(did));
     loadData();
     handleClose();
   };
@@ -133,10 +100,8 @@ function Medicine(props) {
     formikobj.setValues(params.row);
   };
   const columns = [
-    { field: "name", headerName: "Medicine Name", width: 130 },
-    { field: "price", headerName: "price", width: 130 },
-    { field: "quantity", headerName: "quantity", width: 130 },
-    { field: "expiry", headerName: "expiry", width: 130 },
+    { field: "name", headerName: "catagory Name", width: 130 },
+    { field: "price", headerName: " catagory price", width: 130 },
     { field: "FIleimage",
      headerName: "Profile Image", 
      width: 130 ,
@@ -173,7 +138,7 @@ function Medicine(props) {
   ];
 
   const loadData = () => {
-    let localData = JSON.parse(localStorage.getItem("Medicine"));
+    let localData = JSON.parse(localStorage.getItem("Catagory"));
     if (localData !== null) {
       setdata(localData);
     }
@@ -181,7 +146,7 @@ function Medicine(props) {
 
   useEffect(() => {
     // loadData();
-    dispatch(getMedicine());
+    dispatch(getCatagory());
   }, []);
 
   const { handleChange, handleSubmit, handleBlur, errors, touched, values, setFieldValue } =
@@ -192,7 +157,7 @@ function Medicine(props) {
   let handleSearch = (val) => {
     //console.log(val);
 
-    let localData = JSON.parse(localStorage.getItem("Medicine"));
+    let localData = JSON.parse(localStorage.getItem("Catagory"));
 
     let FData = localData.filter(
       (l) =>
@@ -207,10 +172,10 @@ function Medicine(props) {
 
   const finalData = FilterData.length > 0 ? FilterData : data;
 
-  return medicine.isLoding ? (
+  return catagory.isLoding ? (
     <p>Loading ...</p>
-  ) : medicine.error != "" ? (
-    <p>{medicine.error}</p>
+  ) : catagory.error != "" ? (
+    <p>{catagory.error}</p>
   ) : (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -220,7 +185,7 @@ function Medicine(props) {
       <TextField
         margin="dense"
         name="search"
-        label="Search Medicine"
+        label="Search Catagory"
         type="text"
         fullWidth
         variant="standard"
@@ -229,7 +194,7 @@ function Medicine(props) {
 
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={medicine.medicine}
+          rows={catagory.catagory}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
@@ -255,7 +220,7 @@ function Medicine(props) {
         </DialogActions>
       </Dialog>
       <Dialog fullWidth open={open} onClose={handleClose}>
-        <DialogTitle>Medicine Detail</DialogTitle>
+        <DialogTitle>Catagory Detail</DialogTitle>
         <Formik values={formikobj}>
           <Form onSubmit={handleSubmit}>
             <DialogContent>
@@ -263,7 +228,7 @@ function Medicine(props) {
                 value={values.name}
                 margin="dense"
                 name="name"
-                label="Medicine Name"
+                label="Catagory Name"
                 type="text"
                 fullWidth
                 variant="standard"
@@ -275,7 +240,7 @@ function Medicine(props) {
                 value={values.price}
                 margin="dense"
                 name="price"
-                label="Medicine Price"
+                label="Catagory Price"
                 type="text"
                 fullWidth
                 variant="standard"
@@ -283,33 +248,7 @@ function Medicine(props) {
                 onBlur={handleBlur}
               />
               <p>{errors.price && touched.price ? errors.price : ""}</p>
-              <TextField
-                value={values.quantity}
-                margin="dense"
-                name="quantity"
-                label="Medicine Quantity"
-                type="text"
-                fullWidth
-                variant="standard"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <p>
-                {errors.quantity && touched.quantity ? errors.quantity : ""}
-              </p>
-              <TextField
-                value={values.expiry}
-                margin="dense"
-                name="expiry"
-                label="Medicine Expiry"
-                type="text"
-                fullWidth
-                variant="standard"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <p>{errors.expiry && touched.expiry ? errors.expiry : ""}</p>
-
+          
               <p>Profile image</p>
               <input
                 type={"file"}
@@ -335,4 +274,4 @@ function Medicine(props) {
   );
 }
 
-export default Medicine;
+export default Catagory;
